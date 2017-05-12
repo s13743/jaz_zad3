@@ -10,7 +10,7 @@ public class Movie {
 	private double movieRating;
 	private List<Comment> comments;
 	private List<Rating> ratings;
-	private List<Actor> actors;
+	private List<Integer> actors;
 	
 	public int getId() {
 		return id;
@@ -50,10 +50,10 @@ public class Movie {
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
 	}
-	public List<Actor> getActors() {
+	public List<Integer> getActors() {
 		return actors;
 	}
-	public void setActors(List<Actor> actors) {
+	public void setActors(List<Integer> actors) {
 		this.actors = actors;
 	}
 }

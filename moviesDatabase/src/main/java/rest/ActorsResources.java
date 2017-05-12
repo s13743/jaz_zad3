@@ -114,6 +114,14 @@ public class ActorsResources {
 //					m.setActors(new ArrayList<Actor>());
 //				}
 //				m.getActors().add(result);
+
+				if (m.getActors() == null) {
+				m.setActors(new ArrayList<Integer>());
+				}
+				
+				
+				m.getActors().add(result.getId());
+				
 			}
 		}
 		

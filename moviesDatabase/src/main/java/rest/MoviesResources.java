@@ -18,6 +18,7 @@ import domain.Actor;
 import domain.Comment;
 import domain.Movie;
 import domain.Rating;
+import domain.services.ActorService;
 import domain.services.MovieService;
 
 @Path("/movies")
@@ -168,10 +169,37 @@ public class MoviesResources {
 			return null;
 		}
 		
-		if (result.getActors() == null) {
-			result.setActors(new ArrayList<Actor>());
+//		if (result.getActors() == null) {
+//			result.setActors(new ArrayList<Actor>());
+//		}
+//		
+//		return result.getActors();
+		
+		List<Actor> actorsForMovie = new ArrayList<Actor>();
+		
+		List<Actor> actorsDb = new ActorService().getAll();
+		
+		//iteruje bazę filmów
+		for (Movie movie : db.getAll()) {
+			//sprawdzam czy film jest równy filmowi przekazanemu w parametrze
+			if (movie.getId() == movieId) {
+				
+				for (Integer actorId : movie.getActors()) {
+					
+					//przeitereuj baze aktorów
+					for (Actor actor : actorsDb) {
+						if (actor.getId() == actorId) {
+							actorsForMovie.add(actor);
+						}
+					}
+					
+				}
+				
+			}
 		}
 		
-		return result.getActors();
+		//pętla zaminiejące liste intów na liste filmów aktora
+		
+		return actorsForMovie;
 	}
 }
