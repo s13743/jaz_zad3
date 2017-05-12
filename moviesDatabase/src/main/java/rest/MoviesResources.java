@@ -18,7 +18,6 @@ import domain.Actor;
 import domain.Comment;
 import domain.Movie;
 import domain.Rating;
-import domain.services.ActorService;
 import domain.services.MovieService;
 
 @Path("/movies")
@@ -99,10 +98,9 @@ public class MoviesResources {
 		if (result.getComments() == null) {
 			result.setComments(new ArrayList<Comment>());
 		}
-		////////////////////
-		comment.setId(result.getComments().size());
-		////////////////////
-		result.getComments().add(comment);
+		
+		db.addComment(result, comment);
+
 		return Response.ok().build();
 	}
 	
@@ -142,19 +140,7 @@ public class MoviesResources {
 		if (result.getRatings() == null) {
 			result.setRatings(new ArrayList<Rating>());
 		}
-		////////////////////////////
-		rating.setId(result.getRatings().size());
-		////////////////////////////
-		result.getRatings().add(rating);
-		
-		double sum = 0;
-		for (Rating r: result.getRatings()) {
-			sum = sum + r.getRating();
-		}
-
-		double movieRating = sum/result.getRatings().size();
-
-		result.setMovieRating(movieRating);
+		db.addRating(result, rating);
 		return Response.ok().build();
 	}
 	
@@ -169,37 +155,6 @@ public class MoviesResources {
 			return null;
 		}
 		
-//		if (result.getActors() == null) {
-//			result.setActors(new ArrayList<Actor>());
-//		}
-//		
-//		return result.getActors();
-		
-		List<Actor> actorsForMovie = new ArrayList<Actor>();
-		
-		List<Actor> actorsDb = new ActorService().getAll();
-		
-		//iteruje bazę filmów
-		for (Movie movie : db.getAll()) {
-			//sprawdzam czy film jest równy filmowi przekazanemu w parametrze
-			if (movie.getId() == movieId) {
-				
-				for (Integer actorId : movie.getActors()) {
-					
-					//przeitereuj baze aktorów
-					for (Actor actor : actorsDb) {
-						if (actor.getId() == actorId) {
-							actorsForMovie.add(actor);
-						}
-					}
-					
-				}
-				
-			}
-		}
-		
-		//pętla zaminiejące liste intów na liste filmów aktora
-		
-		return actorsForMovie;
+		return db.addActor(movieId);
 	}
 }

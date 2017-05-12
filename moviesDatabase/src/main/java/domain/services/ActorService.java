@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.Actor;
+import domain.Movie;
 
 public class ActorService {
 	
@@ -39,5 +40,22 @@ public class ActorService {
 	
 	public void delete (Actor actor) {
 		db.remove(actor);
+	}
+	
+	public void addMovie (Actor actor, Movie movie) {
+		
+		MovieService dbMovies = new MovieService();
+		
+		for (Movie m : dbMovies.getAll()) {
+			if (m.getId() == movie.getId()) {
+				actor.getMovies().add(m);
+
+				if (m.getActors() == null) {
+					m.setActors(new ArrayList<Integer>());
+				}
+				
+				m.getActors().add(actor.getId());
+			}
+		}
 	}
 }

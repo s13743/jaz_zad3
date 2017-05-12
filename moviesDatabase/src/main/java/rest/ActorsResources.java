@@ -17,14 +17,11 @@ import javax.ws.rs.core.Response;
 import domain.Actor;
 import domain.Movie;
 import domain.services.ActorService;
-import domain.services.MovieService;
 
 @Path("/actors")
 public class ActorsResources {
 	
 	private ActorService db = new ActorService();
-	
-	private MovieService dbMovies = new MovieService();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -106,26 +103,7 @@ public class ActorsResources {
 			result.setMovies(new ArrayList<Movie>());
 		}
 		
-		for (Movie m : dbMovies.getAll()) {
-			if (m.getId() == movie.getId()) {
-				result.getMovies().add(m);
-				//TO NIE DZIALA??????? DLACZEGO ????
-//				if (m.getActors() == null) {
-//					m.setActors(new ArrayList<Actor>());
-//				}
-//				m.getActors().add(result);
-
-				if (m.getActors() == null) {
-				m.setActors(new ArrayList<Integer>());
-				}
-				
-				
-				m.getActors().add(result.getId());
-				
-			}
-		}
-		
+		db.addMovie(result, movie);
 		return Response.ok().build();
 	}
-
 }
