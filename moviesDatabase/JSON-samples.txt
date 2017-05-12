@@ -1,0 +1,31 @@
+Zapisanie nowego filmu lub aktualizacja danych
+
+{
+"title" : "Goofellas",
+"year" : "1990"
+}
+
+Zapisanie komentarza do filmu:
+
+{
+"content" : "Najlepszy film gangsterski"
+}
+
+Zapisanie oceny do filmu:
+
+{
+"rating" : 10
+}
+
+Zapisanie nowego aktora lub aktualizacja danych:
+
+{
+"name" : "Al",
+"surname" : "Pacino"
+}
+
+Dodanie filmu o określonym id do aktora (jednocześnie dodaje aktora filmu):
+
+{
+"id" : 1
+}
